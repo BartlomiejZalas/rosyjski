@@ -1,0 +1,8 @@
+.logo {
+  height: 10em;
+  width: 10em;
+  border-radius: 50%;
+  will-change: filter;
+  transition: filter 300ms;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.24);
+}
