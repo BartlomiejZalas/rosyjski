@@ -70,6 +70,7 @@ input {
   width: 100%;
   text-align: center;
   display: block;
+  z-index: 9999;
 }
 
 input.error {
@@ -84,4 +85,10 @@ input.success {
   border: 1px solid #16ad16;
   color: #16ad16;
   font-weight: bold;
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -1,22 +1,27 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { conjugations } from './dictionary/conjugations';
-import { equal } from './utils';
+import { conjugations as conjugationsDictionary } from './dictionary/conjugations';
+import { equal, shuffle } from './utils';
 import { Input } from './ui/Input';
+import ConfettiExplosion from 'react-confetti-explosion';
+
+const placeholders = ['я', 'ты', 'он', 'мы', 'вы', 'они'];
+const arrayOf6 = Array.from(Array(6).keys());
 
 export const Conjugation = () => {
 
-    const [selectedWord, setSelectedWord] = useState(conjugations[0]);
+    const [conjugations, setConjugations] = useState(conjugationsDictionary);
+    const [counter, setCounter] = useState(0);
     const [errors, setErrors] = useState([false, false, false, false, false, false]);
     const [success, setSuccess] = useState([false, false, false, false, false, false]);
     const [value, setValue] = useState(['', '', '', '', '', '']);
     const [showAnswer, setShowAnswer] = useState(false);
 
+    const selectedWord = conjugations[counter];
     const allOk = success.every(s => s);
 
-    const initializeWord = () => {
-        const randWordIndex = Math.floor(Math.random() * conjugations.length);
-        setSelectedWord(conjugations[randWordIndex]);
+    const setupWord = () => {
+        setCounter(v => v >= conjugations.length - 1 ? 0 : v + 1);
         setValue(['', '', '', '', '', '']);
         setErrors([false, false, false, false, false, false]);
         setSuccess([false, false, false, false, false, false]);
@@ -33,47 +38,35 @@ export const Conjugation = () => {
         }
     }
 
-    const check = () => {
-        checkRow(0);
-        checkRow(1);
-        checkRow(2);
-        checkRow(3);
-        checkRow(4);
-        checkRow(5);
-    }
+    const check = () => arrayOf6.forEach(i => checkRow(i));
 
     const handleOnChange = (index: number, value: string) => {
         setValue(values => values.map((v, i) => i === index ? value : v));
         setErrors(values => values.map((v, i) => i === index ? false : v));
     }
 
-    useEffect(() => {
-        initializeWord();
-    }, []);
+    useEffect(() => setConjugations([...shuffle(conjugationsDictionary)]), []);
 
     return (
         <div className="content">
 
-            <h2>Odmień{' '}
+            <h2>Odmień ({counter + 1}/{conjugationsDictionary.length}){' '}
                 <span onClick={() => setShowAnswer(v => !v)}>
                     {allOk ? '😍' : showAnswer ? '🙊' : '🙈'}
                 </span>
             </h2>
             <h3>{showAnswer ? selectedWord.ru.join(' ') : selectedWord.base}</h3>
-            <Input placeholder="я" value={value[0]} onChange={(v) => handleOnChange(0, v)} error={errors[0]}
-                   success={success[0]}/>
-            <Input placeholder="ты" value={value[1]} onChange={(v) => handleOnChange(1, v)} error={errors[1]}
-                   success={success[1]}/>
-            <Input placeholder="он" value={value[2]} onChange={(v) => handleOnChange(2, v)} error={errors[2]}
-                   success={success[2]}/>
-            <Input placeholder="мы" value={value[3]} onChange={(v) => handleOnChange(3, v)} error={errors[3]}
-                   success={success[3]}/>
-            <Input placeholder="вы" value={value[4]} onChange={(v) => handleOnChange(4, v)} error={errors[4]}
-                   success={success[4]}/>
-            <Input placeholder="они" value={value[5]} onChange={(v) => handleOnChange(5, v)} error={errors[5]}
-                   success={success[5]}/>
 
-            <button className={allOk ? 'check' : undefined} onClick={allOk ? initializeWord : check}>
+            {arrayOf6.map(i => (
+                <Input
+                    placeholder={placeholders[i]}
+                    value={value[i]}
+                    onChange={(v) => handleOnChange(i, v)}
+                    error={errors[i]}
+                    success={success[i]}/>
+            ))}
+            {allOk && <div className="centered"><ConfettiExplosion /></div>}
+            <button className={allOk ? 'check' : undefined} onClick={allOk ? setupWord : check}>
                 {allOk ? 'Dalej' : 'Sprawdź'}
             </button>
             <Link to="/">« Powrót</Link>
