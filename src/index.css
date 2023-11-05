@@ -10,6 +10,15 @@ body {
   background: #f4f9ff;
 }
 
+.logo {
+  height: 10em;
+  width: 10em;
+  border-radius: 50%;
+  will-change: filter;
+  transition: filter 300ms;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.24);
+}
+
 #root {
   width: 320px;
   margin: 0 auto;
@@ -91,4 +100,9 @@ input.success {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+select {
+  font-size: 1em;
+  padding: 0.2em;
 }
