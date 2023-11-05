@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { conjugations as conjugationsDictionary } from './dictionary/conjugations';
-import { equal, shuffle } from './utils';
-import { Input } from './ui/Input';
+import { conjugations as conjugationsDictionary } from '../dictionary/conjugations';
+import { equal, shuffle } from '../utils';
+import { Input } from '../ui/Input';
 import ConfettiExplosion from 'react-confetti-explosion';
 
 const placeholders = ['я', 'ты', 'он', 'мы', 'вы', 'они'];

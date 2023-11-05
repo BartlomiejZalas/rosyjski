@@ -1,4 +1,4 @@
-import rusFlag from './assets/ros.png';
+import rusFlag from '../assets/ros.png';
 import { useNavigate } from 'react-router-dom';
 
 export const Home = () => {

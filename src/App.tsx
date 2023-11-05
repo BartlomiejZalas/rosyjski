@@ -1,9 +1,9 @@
 import './App.css'
 import { Routes, Route } from 'react-router-dom';
-import { Home } from './Home';
-import { Layout } from './Layout';
-import { Words } from './Words';
-import { Conjugation } from './Conjugation';
+import { Home } from './pages/Home';
+import { Layout } from './ui/Layout';
+import { Words } from './pages/Words';
+import { Conjugation } from './pages/Conjugation';
 
 function App() {
     return (

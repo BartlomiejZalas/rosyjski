@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { words as wordsDictionary } from './dictionary/words';
-import { equal, shuffle } from './utils';
-import { Input } from './ui/Input';
+import { words as wordsDictionary } from '../dictionary/words';
+import { equal, shuffle } from '../utils';
+import { Input } from '../ui/Input';
 import ConfettiExplosion from 'react-confetti-explosion';
 
 
