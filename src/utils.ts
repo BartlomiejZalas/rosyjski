@@ -1,5 +1,14 @@
 export const equal = (w1: string, w2: string) => {
-    return w1.toLowerCase().trim() === w2.toLowerCase().trim();
+    const toPlain = (v: string) =>
+        v
+            .toLowerCase()
+            .trim()
+            .replace('!', '')
+            .replace('?', '')
+            .replace('.', '')
+            .replace(',', '');
+
+    return toPlain(w1) === toPlain(w2);
 }
 
 export const shuffle = <T,>(array: T[]): T[] => {
