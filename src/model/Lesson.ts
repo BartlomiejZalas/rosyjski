@@ -3,6 +3,7 @@ export enum Lesson {
     LESSON_2 = 'LESSON_2',
     LESSON_3 = 'LESSON_3',
     LESSON_4 = 'LESSON_4',
+    LESSON_4_HUMAN_DESCRIPTION = 'LESSON_4_HUMAN_DESCRIPTION',
 }
 
 export const allLessons = Object.keys(Lesson);

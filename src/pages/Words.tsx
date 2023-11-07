@@ -59,6 +59,7 @@ export const Words = () => {
                 <option value={Lesson.LESSON_2}>Lekcja 2</option>
                 <option value={Lesson.LESSON_3}>Lekcja 3</option>
                 <option value={Lesson.LESSON_4}>Lekcja 4</option>
+                <option value={Lesson.LESSON_4_HUMAN_DESCRIPTION}>Lekcja 4 (opis człowieka)</option>
                 <option value={ALL_LESSONS}>Całość</option>
             </select>
             <h3>
