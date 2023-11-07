@@ -224,7 +224,7 @@ export const words: CategorizedWords = {
             {pl: 'mój, moją, moja', ru: 'мой, мою, моя'},
             {pl: 'mężczyzna', ru: 'мужчина'},
             {pl: 'nas', ru: 'нас'},
-            {pl: 'dworca', ru: 'недалеко'},
+            {pl: 'niedaleko', ru: 'недалеко'},
             {pl: 'niedaleko od dworca', ru: 'недалеко от вокзала'},
             {pl: 'nieść', ru: 'нести'},
             {pl: 'nic', ru: 'ничего'},
