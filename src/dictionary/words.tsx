@@ -19,7 +19,7 @@ export const words: CategorizedWords = {
             {pl: 'wiedzieć', ru: 'знать'},
             {pl: 'i', ru: 'и'},
             {pl: 'przepraszam', ru: 'извините'},
-            {pl: 'łqdny', ru: 'красивый'},
+            {pl: 'ładny', ru: 'красивый'},
             {pl: 'Mińsk', ru: 'Минск'},
             {pl: 'może', ru: 'может'},
             {pl: 'Moskwa', ru: 'Москва'},
