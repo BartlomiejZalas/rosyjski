@@ -3,10 +3,10 @@ export const equal = (w1: string, w2: string) => {
         v
             .toLowerCase()
             .trim()
-            .replace('!', '')
-            .replace('?', '')
-            .replace('.', '')
-            .replace(',', '');
+            .replaceAll('!', '')
+            .replaceAll('?', '')
+            .replaceAll('.', '')
+            .replaceAll(',', '');
 
     return toPlain(w1) === toPlain(w2);
 }
