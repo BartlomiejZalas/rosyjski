@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { words as wordsDictionary } from '../dictionary/words';
-import { equal, shuffle } from '../utils';
+import { equal } from '../utils';
 import { Input } from '../ui/Input';
 import ConfettiExplosion from 'react-confetti-explosion';
 import { ALL_LESSONS, allLessons, Lesson } from '../model/Lesson';
-import { Word } from '../model/Word';
+import { CategorizedWords, Word } from '../model/Word';
 
 const MARKED_WORDS_KEY = 'markedWords';
 
@@ -59,12 +59,12 @@ export const Words = () => {
     useEffect(() => {
         const allWords: Word[] = allLessons.reduce((all: Word[], lesson) => [...all, ...wordsDictionary[lesson as Lesson]], []);
         if (category === ALL_LESSONS) {
-            setWords([...(allWords)]);
+            setWords([...allWords]);
         }
         if (category === Lesson.MARKED) {
             setWords([...allWords.filter(w => markedWords.includes(w.ru))]);
         } else {
-            setWords([...(wordsDictionary[category])]);
+            setWords([...wordsDictionary[category  as keyof CategorizedWords]]);
         }
     }, [category, markedWords]);
 
