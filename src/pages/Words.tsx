@@ -7,7 +7,11 @@ import ConfettiExplosion from 'react-confetti-explosion';
 import { ALL_LESSONS, allLessons, Lesson } from '../model/Lesson';
 import { Word } from '../model/Word';
 
+const MARKED_WORDS_KEY = 'markedWords';
+
 export const Words = () => {
+
+    const storedMarkedWords: string[] = JSON.parse(localStorage.getItem(MARKED_WORDS_KEY) || '[]');
 
     const [words, setWords] = useState(wordsDictionary.LESSON_1);
     const [category, setCategory] = useState<Lesson | typeof ALL_LESSONS>(Lesson.LESSON_1);
@@ -16,8 +20,7 @@ export const Words = () => {
     const [success, setSuccess] = useState(false);
     const [value, setValue] = useState('');
     const [showAnswer, setShowAnswer] = useState(false);
-
-    const selectedWord = words[counter];
+    const [markedWords, setMarkedWords] = useState(storedMarkedWords);
 
     const setupWord = () => {
         setValue('');
@@ -37,14 +40,55 @@ export const Words = () => {
         }
     }
 
-    useEffect(() => {
-        if (category === ALL_LESSONS) {
-            const allWords: Word[] = allLessons.reduce((all: Word[], lesson) => [...all, ...wordsDictionary[lesson as Lesson]], []);
-            setWords([...shuffle(allWords)]);
+    const toggleMarkWord = () => {
+        if (markedWords.includes(selectedWord.ru)) {
+            setMarkedWords(current => {
+                const newWords = current.filter(w => w !== selectedWord.ru);
+                localStorage.setItem(MARKED_WORDS_KEY, JSON.stringify(newWords));
+                return newWords;
+            });
         } else {
-            setWords([...shuffle(wordsDictionary[category])]);
+            setMarkedWords(current => {
+                const newWords = [...current, selectedWord.ru];
+                localStorage.setItem(MARKED_WORDS_KEY, JSON.stringify(newWords));
+                return newWords;
+            });
         }
-    }, [category])
+    }
+
+    useEffect(() => {
+        const allWords: Word[] = allLessons.reduce((all: Word[], lesson) => [...all, ...wordsDictionary[lesson as Lesson]], []);
+        if (category === ALL_LESSONS) {
+            setWords([...(allWords)]);
+        }
+        if (category === Lesson.MARKED) {
+            setWords([...allWords.filter(w => markedWords.includes(w.ru))]);
+        } else {
+            setWords([...(wordsDictionary[category])]);
+        }
+    }, [category, markedWords]);
+
+    const selectedWord = words[counter];
+
+    const menu = (
+        <select onChange={(e) => setCategory(e.target.value as Lesson)} value={category}>
+            <option value={Lesson.LESSON_1}>Lekcja 1</option>
+            <option value={Lesson.LESSON_2}>Lekcja 2</option>
+            <option value={Lesson.LESSON_3}>Lekcja 3</option>
+            <option value={Lesson.LESSON_4}>Lekcja 4</option>
+            <option value={Lesson.LESSON_4_HUMAN_DESCRIPTION}>Lekcja 4 (opis człowieka)</option>
+            <option value
+                        ={Lesson.MARKED} disabled={markedWords.length === 0}>Oznaczone flagą
+                ({markedWords.length})
+            </option>
+            <option value={ALL_LESSONS}>Całość</option>
+        </select>);
+
+    if (!selectedWord) {
+        return menu;
+    }
+
+    const isMarked = markedWords.includes(selectedWord.ru);
 
     return (
         <div className="content">
@@ -53,15 +97,11 @@ export const Words = () => {
                 <span onClick={() => setShowAnswer(v => !v)}>
                     {success ? '😍' : showAnswer ? '🙊' : '🙈'}
                 </span>
+                <span onClick={toggleMarkWord} style={{color: isMarked ? 'red' : 'gray'}}>
+                    ⚑
+                </span>
             </h2>
-            <select onChange={(e) => setCategory(e.target.value as Lesson)} value={category}>
-                <option value={Lesson.LESSON_1}>Lekcja 1</option>
-                <option value={Lesson.LESSON_2}>Lekcja 2</option>
-                <option value={Lesson.LESSON_3}>Lekcja 3</option>
-                <option value={Lesson.LESSON_4}>Lekcja 4</option>
-                <option value={Lesson.LESSON_4_HUMAN_DESCRIPTION}>Lekcja 4 (opis człowieka)</option>
-                <option value={ALL_LESSONS}>Całość</option>
-            </select>
+            {menu}
             <h3>
                 {showAnswer ? selectedWord.ru : selectedWord.pl}
             </h3>

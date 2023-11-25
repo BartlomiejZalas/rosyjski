@@ -4,6 +4,7 @@ export enum Lesson {
     LESSON_3 = 'LESSON_3',
     LESSON_4 = 'LESSON_4',
     LESSON_4_HUMAN_DESCRIPTION = 'LESSON_4_HUMAN_DESCRIPTION',
+    MARKED = 'MARKED',
 }
 
 export const allLessons = Object.keys(Lesson);

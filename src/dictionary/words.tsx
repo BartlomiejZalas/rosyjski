@@ -292,5 +292,6 @@ export const words: CategorizedWords = {
                 {pl: 'przylizane (włosy)', ru: 'прилизанные'},
                 {pl: 'roztrzepane (włosy)', ru: 'растрёпанные'},
                 {pl: 'rozpuszczone (włosy)', ru: 'распущенные'},
-        ]
+        ],
+        [Lesson.MARKED]: [],
 }
