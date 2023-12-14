@@ -76,6 +76,8 @@ export const Words = () => {
             <option value={Lesson.LESSON_2}>Lekcja 2</option>
             <option value={Lesson.LESSON_3}>Lekcja 3</option>
             <option value={Lesson.LESSON_4}>Lekcja 4</option>
+            <option value={Lesson.LESSON_5}>Lekcja 5</option>
+            <option value={Lesson.LESSON_5_NUMBERS}>Lekcja 5 (numery 1-20)</option>
             <option value={Lesson.LESSON_4_HUMAN_DESCRIPTION}>Lekcja 4 (opis człowieka)</option>
             <option value
                         ={Lesson.MARKED} disabled={markedWords.length === 0}>Oznaczone flagą
