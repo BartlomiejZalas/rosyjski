@@ -22,12 +22,20 @@ export const Words = () => {
     const [showAnswer, setShowAnswer] = useState(false);
     const [markedWords, setMarkedWords] = useState(storedMarkedWords);
 
+    const goNext = () => {
+        setCounter(v => v >= words.length - 1 ? 0 : v + 1);
+    }
+
+    const goPrev = () => {
+        setCounter(v => v === 0 ? words.length - 1 : v - 1);
+    }
+
     const setupWord = () => {
         setValue('');
-        setCounter(v => v >= words.length - 1 ? 0 : v + 1);
         setError(false);
         setSuccess(false);
         setShowAnswer(false);
+        goNext();
     }
 
     const checkWord = () => {
@@ -60,12 +68,12 @@ export const Words = () => {
         const allWords: Word[] = allLessons.reduce((all: Word[], lesson) => [...all, ...wordsDictionary[lesson as Lesson]], []);
         if (category === ALL_LESSONS) {
             setWords([...allWords]);
-        }
-        if (category === Lesson.MARKED) {
+        } else if (category === Lesson.MARKED) {
             setWords([...allWords.filter(w => markedWords.includes(w.ru))]);
         } else {
-            setWords([...wordsDictionary[category  as keyof CategorizedWords]]);
+            setWords([...wordsDictionary[category as keyof CategorizedWords]]);
         }
+        setCounter(0);
     }, [category, markedWords]);
 
     const selectedWord = words[counter];
@@ -76,11 +84,11 @@ export const Words = () => {
             <option value={Lesson.LESSON_2}>Lekcja 2</option>
             <option value={Lesson.LESSON_3}>Lekcja 3</option>
             <option value={Lesson.LESSON_4}>Lekcja 4</option>
+            <option value={Lesson.LESSON_4_HUMAN_DESCRIPTION}>Lekcja 4 (opis człowieka)</option>
             <option value={Lesson.LESSON_5}>Lekcja 5</option>
             <option value={Lesson.LESSON_5_NUMBERS}>Lekcja 5 (numery 1-20)</option>
-            <option value={Lesson.LESSON_4_HUMAN_DESCRIPTION}>Lekcja 4 (opis człowieka)</option>
-            <option value
-                        ={Lesson.MARKED} disabled={markedWords.length === 0}>Oznaczone flagą
+            <option value={Lesson.LESSON_5_OPINIONS}>Lekcja 5 (rady, opinie)</option>
+            <option value={Lesson.MARKED} disabled={markedWords.length === 0}>Oznaczone flagą
                 ({markedWords.length})
             </option>
             <option value={ALL_LESSONS}>Całość</option>
@@ -94,14 +102,16 @@ export const Words = () => {
 
     return (
         <div className="content">
-            <h2>
+            <h2 style={{whiteSpace: 'nowrap'}}>
+                <a href="#" onClick={goPrev}>&laquo;</a>{' '}
                 Przetłumacz ({counter + 1}/{words.length}){' '}
                 <span onClick={() => setShowAnswer(v => !v)}>
                     {success ? '😍' : showAnswer ? '🙊' : '🙈'}
-                </span>
-                <span onClick={toggleMarkWord} style={{color: isMarked ? 'red' : 'gray'}}>
+                </span>{' '}
+                <span onClick={toggleMarkWord} style={{ color: isMarked ? 'red' : 'gray' }}>
                     ⚑
-                </span>
+                </span>{' '}
+                <a href="#" onClick={goNext}>&raquo;</a>
             </h2>
             {menu}
             <h3>
@@ -119,7 +129,7 @@ export const Words = () => {
                 }}
             />
 
-            {success && <div className="centered"><ConfettiExplosion/></div>}
+            {success && <div className="centered"><ConfettiExplosion /></div>}
 
             <button className={success ? 'check' : undefined} onClick={success ? setupWord : checkWord}>
                 {success ? 'Dalej' : 'Sprawdź'}
