@@ -7,6 +7,7 @@ export enum Lesson {
     LESSON_5 = 'LESSON_5',
     LESSON_5_NUMBERS = 'LESSON_5_NUMBERS',
     LESSON_5_OPINIONS = 'LESSON_5_OPINIONS',
+    LESSON_6 = 'LESSON_6',
     MARKED = 'MARKED',
 }
 
